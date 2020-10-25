@@ -7,14 +7,12 @@
 @media screen and (max-width: 1023px) {
   .footer {
     max-width: 720px;
-    margin: 0 auto;
   }
 }
 
 @media screen and (max-width: 767px) {
   .footer {
     max-width: 282px;
-    margin: 0 auto;
     padding-bottom: 36px;
   }
 }
