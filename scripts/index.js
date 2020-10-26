@@ -8,9 +8,9 @@ let popupNameField = document.querySelector('.popup__input_type_name');
 let popupTitleField = document.querySelector('.popup__input_type_title');
 
 function showPopup() {
-  popup.classList.add('popup_opened');
   popupNameField.value = profileName.textContent;
   popupTitleField.value = profileTitle.textContent;
+  popup.classList.add('popup_opened');
 }
 
 function closePopup() {
