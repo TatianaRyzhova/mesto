@@ -50,8 +50,8 @@ function createCard(data) {
     event.target.classList.toggle('cards__like-button_active');
   });
 
-  cardElement.querySelector('.cards__remove-button').addEventListener('click', function() {
-    document.querySelector('.cards__group').remove();
+  cardElement.querySelector('.cards__remove-button').addEventListener('click', function(event) {
+    event.target.closest('.cards__group').remove();
   });
 
   return cardElement;
