@@ -43,8 +43,8 @@ const cardDescription = document.querySelector('.cards__description');
 const cardImage = document.querySelector('.cards__photo');
 const cardPopupForm = document.querySelector('.popup__card-form');
 
-const zommedImage = document.querySelector('.cards__zoomed-photo');
-const zommedImageCaption = document.querySelector('.cards__caption');
+const zommedImage = document.querySelector('.zoomed-photo');
+const zommedImageCaption = document.querySelector('.caption');
 const imagePopupCloseButton = document.querySelector('.popup__close-button_image');
 
 function createCard(data) {
