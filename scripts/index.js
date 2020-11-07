@@ -48,7 +48,7 @@ const zommedImageCaption = document.querySelector('.caption');
 const imagePopupCloseButton = document.querySelector('.popup__close-button_image');
 
 function createCard(data) {
-  const cardTemplate = document.querySelector('#card-template').content;
+  const cardTemplate = document.querySelector('#cards-template').content;
   const cardElement = cardTemplate.cloneNode(true);
 
   cardElement.querySelector('.cards__photo').src = data.link;
