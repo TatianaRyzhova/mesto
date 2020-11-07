@@ -3,7 +3,7 @@ const addCardButton = document.querySelector('.profile__add-button');
 const profileName = document.querySelector('.profile__name');
 const profileTitle = document.querySelector('.profile__title');
 const popup = document.querySelector('.popup');
-const popupCloseButton = document.querySelector('.popup__close-button');
+const profilePopupCloseButton = document.querySelector('.popup__close-button_profile');
 const popupForm = document.querySelector('.popup__form');
 const popupNameField = document.querySelector('.popup__input_type_name');
 const popupTitleField = document.querySelector('.popup__input_type_title');
@@ -35,9 +35,15 @@ const initialCards = [
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
-const popupEditProfile = document.querySelector('.popup_type_edit');
-const popupAddCard = document.querySelector('.popup_type_add-card');
-const popupViewImage = document.querySelector('.popup_type_image');
+const profilePopup = document.querySelector('.popup_type_edit');
+const cardPopup = document.querySelector('.popup_type_add-card');
+const imagePopup = document.querySelector('.popup_type_image');
+const cardPopupCloseButton = document.querySelector('.popup__close-button_card');
+// const cardDescription = document.querySelector('.cards__description');
+// const cardImage = document.querySelector('.cards__photo');
+// const cardTitle = document.querySelector('.popup__input_type_card-title');
+// const cardLink = document.querySelector('.popup__input_type_card-link');
+const cardPopupForm = document.querySelector('.popup__card-form');
 
 function createCard(data) {
   const cardTemplate = document.querySelector('#card-template').content;
@@ -57,42 +63,71 @@ function createCard(data) {
   return cardElement;
 }
 
-function addCard(data) {
-  const cards = data.map(function (el) {
-    return createCard(el);
-  })
+function addCards(data) {
+  const cards = data.map(el => createCard(el))
 
   cards.forEach(function (el) {
     cardsContainer.prepend(el);
   })
 }
 
-addCard(initialCards);
+addCards(initialCards);
 
-function showPopup() {
-  popupNameField.value = profileName.textContent;
-  popupTitleField.value = profileTitle.textContent;
+function submitAddCardForm(event) {
+  event.preventDefault();
+  const cardData = [{
+    name: document.querySelector('.popup__input_type_card-title').value,
+    link: document.querySelector('.popup__input_type_card-link').value
+}]
+  addCards(cardData);
+  cardPopupForm.reset();
+  closePopup(cardPopup);
+}
+cardPopupForm.addEventListener('submit', submitAddCardForm);
+
+
+function showPopup(popup) {
   popup.classList.add('popup_opened');
 }
 
-function closePopup() {
+function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
 
-function submitPopupForm(event) {
+function openProfilePopup() {
+  popupNameField.value = profileName.textContent;
+  popupTitleField.value = profileTitle.textContent;
+  showPopup(profilePopup);  
+}
+
+function closeProfilePopup(profilePopup) {
+  profilePopupCloseButton.addEventListener('click', () => closePopup(profilePopup));
+}
+
+function submitProfilePopup(profilePopup) {
+  popupForm.addEventListener('submit', event => {
   event.preventDefault();
   profileName.textContent = popupNameField.value;
   profileTitle.textContent = popupTitleField.value;
-  closePopup();
+  closePopup(profilePopup);
+})
 }
 
-editButton.addEventListener('click', showPopup);
-popupCloseButton.addEventListener('click', closePopup);
-popupForm.addEventListener('submit', submitPopupForm);
+function openCardPopup(cardPopup) {
+  addCardButton.addEventListener('click', () => showPopup(cardPopup));
+}
 
-// editButton.addEventListener('click', () => showPopup(popupEditProfile));
-// popupCloseButton.addEventListener('click', () => closePopup(popupEditProfile));
-// popupForm.addEventListener('submit', submitPopupForm(popupEditProfile));
+function closeCardPopup(cardPopup) {
+  cardPopupCloseButton.addEventListener('click', () => closePopup(cardPopup));
+}
 
-// addCardButton.addEventListener('click', () => showPopup(popupAddCard));
-// popupCloseButton.addEventListener('click', () => closePopup(popupAddCard));
+editButton.addEventListener('click', () => openProfilePopup());
+closeProfilePopup(profilePopup);
+submitProfilePopup(profilePopup);
+
+openCardPopup(cardPopup);
+closeCardPopup(cardPopup);
+
+// editButton.addEventListener('click', showPopup);
+// popupCloseButton.addEventListener('click', closePopup);
+// popupForm.addEventListener('submit', submitPopupForm);
