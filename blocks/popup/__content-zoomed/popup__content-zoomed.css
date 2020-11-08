@@ -5,7 +5,7 @@
   z-index: 2;
 
 }
-  
+
 @media screen and (max-width: 767px) {
   .popup__content-zoomed {
     max-width: 282px;
