@@ -142,3 +142,15 @@ function openImagePopup(src, alt, caption) {
 }
 
 imagePopupCloseButton.addEventListener('click', () => closePopup(imagePopup));
+
+function popupClickHandler(popup) {
+  popup.addEventListener('mousedown', function (event) {
+    if (event.target.classList.contains('popup') || event.target.classList.contains('overlay')) {
+      closePopup(popup);
+    }
+  })
+}
+
+popupClickHandler(profilePopup);
+popupClickHandler(cardPopup);
+popupClickHandler(imagePopup);
