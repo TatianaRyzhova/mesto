@@ -154,3 +154,15 @@ function popupClickHandler(popup) {
 popupClickHandler(profilePopup);
 popupClickHandler(cardPopup);
 popupClickHandler(imagePopup);
+
+function closePopupWithEsc(popup) {
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      closePopup(popup);
+    }
+  })
+}
+
+closePopupWithEsc(profilePopup);
+closePopupWithEsc(cardPopup);
+closePopupWithEsc(imagePopup);
