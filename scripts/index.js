@@ -81,19 +81,6 @@ function addCards(data) {
 
 addCards(initialCards);
 
-function submitAddCardForm(event) {
-  event.preventDefault();
-  const cardData = [{
-    name: popupCardTitle.value,
-    link: popupCardLink.value
-  }]
-  addCards(cardData);
-  cardPopupForm.reset();
-  closePopup(cardPopup);
-}
-
-cardPopupForm.addEventListener('submit', submitAddCardForm);
-
 function openPopup(popup) {
   popup.classList.add('popup_opened');
 }
@@ -126,6 +113,19 @@ function openCardPopup(cardPopup) {
 }
 
 openCardPopup(cardPopup);
+
+function submitAddCardForm(event) {
+  event.preventDefault();
+  const cardData = [{
+    name: popupCardTitle.value,
+    link: popupCardLink.value
+  }]
+  addCards(cardData);
+  cardPopupForm.reset();
+  closePopup(cardPopup);
+}
+
+cardPopupForm.addEventListener('submit', submitAddCardForm);
 
 function closeCardPopup() {
   closePopup(cardPopup)
