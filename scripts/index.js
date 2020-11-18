@@ -81,19 +81,6 @@ function addCards(data) {
 
 addCards(initialCards);
 
-function submitAddCardForm(event) {
-  event.preventDefault();
-  const cardData = [{
-    name: popupCardTitle.value,
-    link: popupCardLink.value
-  }]
-  addCards(cardData);
-  cardPopupForm.reset();
-  closePopup(cardPopup);
-}
-
-cardPopupForm.addEventListener('submit', submitAddCardForm);
-
 function openPopup(popup) {
   popup.classList.add('popup_opened');
 }
@@ -127,6 +114,19 @@ function openCardPopup(cardPopup) {
 
 openCardPopup(cardPopup);
 
+function submitAddCardForm(event) {
+  event.preventDefault();
+  const cardData = [{
+    name: popupCardTitle.value,
+    link: popupCardLink.value
+  }]
+  addCards(cardData);
+  cardPopupForm.reset();
+  closePopup(cardPopup);
+}
+
+cardPopupForm.addEventListener('submit', submitAddCardForm);
+
 function closeCardPopup() {
   closePopup(cardPopup)
   cardPopupForm.reset();
@@ -142,3 +142,15 @@ function openImagePopup(src, alt, caption) {
 }
 
 imagePopupCloseButton.addEventListener('click', () => closePopup(imagePopup));
+
+function popupClickHandler(popup) {
+  popup.addEventListener('mousedown', function (event) {
+    if (event.target.classList.contains('popup') || event.target.classList.contains('overlay')) {
+      closePopup(popup);
+    }
+  })
+}
+
+popupClickHandler(profilePopup);
+popupClickHandler(cardPopup);
+popupClickHandler(imagePopup);
