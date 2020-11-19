@@ -36,3 +36,5 @@
 @import url("../blocks/overlay/overlay.css");
 @import url("../blocks/caption/caption.css");
 @import url("../blocks/popup/__content-zoomed/popup__content-zoomed.css");
+@import url("../blocks/popup/__form/_type/popup__form_type_error.css");
+@import url("../blocks/popup/__input-error/_active/popup__input-error_active.css");
