@@ -24,7 +24,7 @@
   .popup__input {
     max-width: 238px;
     height: 27px;
-    margin: 0 22px 30px 22px;
+    margin: 0 22px;
   }
 
   .popup__input:last-of-type {
