@@ -65,6 +65,12 @@ function resetValidation(form, config) {
   })
 }
 
+function disableSubmitButton(form, config) {
+  const submitButton = form.querySelector(config.submitButtonSelector);
+  submitButton.classList.add(config.buttonInvalidClass);
+  submitButton.disabled = true;
+}
+
 const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',

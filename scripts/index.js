@@ -87,13 +87,6 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
 
-//????
-function disableSubmitButton(popupForm) {
-  const submitButton = popupForm.querySelector('.popup__save-button');
-  submitButton.classList.add('popup__save-button_state_disabled');
-  submitButton.disabled = true;
-}
-
 function openProfilePopup() {
   popupNameField.value = profileName.textContent;
   popupTitleField.value = profileTitle.textContent;
@@ -130,7 +123,7 @@ function submitAddCardForm(event) {
   }]
   addCards(cardData);
   cardPopupForm.reset();
-  disableSubmitButton(cardPopupForm);
+  disableSubmitButton(cardPopupForm, validationConfig);
   closePopup(cardPopup);
 }
 
