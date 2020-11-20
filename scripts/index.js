@@ -83,10 +83,24 @@ addCards(initialCards);
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  // resetValidationState();
 }
+
+// function resetValidationState() {
+//   const errors = document.querySelectorAll('.popup__input-error_active');
+//   for (let i = 0; i < errors.length; i++) {
+//     errors[i].remove();
+//   }
+// }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+}
+
+function disableSubmitButton(popupForm) {
+  const submitButton = popupForm.querySelector('.popup__save-button');
+  submitButton.classList.add('popup__save-button_state_disabled');
+  submitButton.disabled = true;
 }
 
 function openProfilePopup() {
@@ -122,6 +136,7 @@ function submitAddCardForm(event) {
   }]
   addCards(cardData);
   cardPopupForm.reset();
+  disableSubmitButton(cardPopupForm);
   closePopup(cardPopup);
 }
 
