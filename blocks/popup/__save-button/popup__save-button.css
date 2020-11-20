@@ -1,5 +1,5 @@
 .popup__save-button {
-  margin: 48px auto 0;
+  margin: 0 auto;
   border: 2px solid #FFFFFF;
   box-sizing: border-box;
   border-radius: 2px;
@@ -19,10 +19,14 @@
   opacity: 0.6;
 }
 
+.popup__save-button:disabled {
+  pointer-events: none;
+}
+
 @media screen and (max-width: 767px) {
   .popup__save-button {
     width: 238px;
     height: 46px;
-    margin: 45px auto 0;
+    margin: 0 auto;
   }
 }
