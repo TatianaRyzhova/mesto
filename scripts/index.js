@@ -81,22 +81,33 @@ addCards(initialCards);
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', function (event) {
+    closePopupWithEsc(popup, event);
+  });
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', function (event) {
+    closePopupWithEsc(popup, event);
+  })
+}
+
+function closePopupWithEsc(popup, event) {
+  if (event.key === 'Escape') {
+    closePopup(popup);
+  }
 }
 
 function openProfilePopup() {
   popupNameField.value = profileName.textContent;
   popupTitleField.value = profileTitle.textContent;
-  openPopup(profilePopup);
   resetValidation(profilePopupForm, validationConfig);
+  openPopup(profilePopup);
 }
 
 function submitProfilePopup(profilePopup) {
-  popupForm.addEventListener('submit', event => {
-    event.preventDefault();
+  popupForm.addEventListener('submit', () => {
     profileName.textContent = popupNameField.value;
     profileTitle.textContent = popupTitleField.value;
     closePopup(profilePopup);
@@ -108,21 +119,19 @@ submitProfilePopup(profilePopup);
 profilePopupCloseButton.addEventListener('click', () => closePopup(profilePopup));
 
 function openCardPopup() {
+  resetValidation(cardPopupForm, validationConfig);
   openPopup(cardPopup);
   cardPopupForm.reset();
-  resetValidation(cardPopupForm, validationConfig);
 }
 
 addCardButton.addEventListener('click', () => openCardPopup());
 
-function submitAddCardForm(event) {
-  event.preventDefault();
+function submitAddCardForm() {
   const cardData = [{
     name: popupCardTitle.value,
     link: popupCardLink.value
   }]
   addCards(cardData);
-  cardPopupForm.reset();
   disableSubmitButton(cardPopupForm, validationConfig);
   closePopup(cardPopup);
 }
@@ -131,7 +140,6 @@ cardPopupForm.addEventListener('submit', submitAddCardForm);
 
 function closeCardPopup() {
   closePopup(cardPopup)
-  cardPopupForm.reset();
 }
 
 cardPopupCloseButton.addEventListener('click', () => closeCardPopup());
@@ -156,15 +164,3 @@ function popupClickHandler(popup) {
 popupClickHandler(profilePopup);
 popupClickHandler(cardPopup);
 popupClickHandler(imagePopup);
-
-function closePopupWithEsc(popup) {
-  document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape') {
-      closePopup(popup);
-    }
-  })
-}
-
-closePopupWithEsc(profilePopup);
-closePopupWithEsc(cardPopup);
-closePopupWithEsc(imagePopup);
