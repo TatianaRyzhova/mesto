@@ -28,10 +28,8 @@ function setButtonState(button, isActive, config) {
   }
 }
 
-function setEventListeners(form, config) {
+function setEventListeners(form, submitButton, config) {
   const inputsList = form.querySelectorAll(config.inputSelector);
-  const submitButton = form.querySelector(config.submitButtonSelector);
-
   inputsList.forEach((input) => {
     input.addEventListener('input', () => {
       checkInputValidity(form, input, config);
@@ -43,13 +41,11 @@ function setEventListeners(form, config) {
 function enableValidation(config) {
   const forms = document.querySelectorAll(config.formSelector);
   forms.forEach((form) => {
-    setEventListeners(form, config);
-
+    const submitButton = form.querySelector(config.submitButtonSelector);
+    setEventListeners(form, submitButton, config);
     form.addEventListener('submit', (evt) => {
       evt.preventDefault();
     });
-
-    const submitButton = form.querySelector(config.submitButtonSelector);
     setButtonState(submitButton, form.checkValidity(), config)
   });
 }
