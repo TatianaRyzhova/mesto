@@ -81,21 +81,18 @@ addCards(initialCards);
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  document.addEventListener('keydown', function (event) {
-    closePopupWithEsc(popup, event);
-  });
+  document.addEventListener('keydown', closePopupWithEsc);
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', function (event) {
-    closePopupWithEsc(popup, event);
-  })
+  document.removeEventListener('keydown', closePopupWithEsc);
 }
 
-function closePopupWithEsc(popup, event) {
+function closePopupWithEsc(event) {
+  const openedPopup = document.querySelector('.popup_opened');
   if (event.key === 'Escape') {
-    closePopup(popup);
+    closePopup(openedPopup);
   }
 }
 
