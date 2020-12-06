@@ -41,10 +41,10 @@
       <button type="button" aria-label="Close" class="popup__close-button popup__close-button_profile"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
       <form name="profileData" class="popup__form popup__profile-form" novalidate>
-        <input type="text" name="name" class="form__input popup__input popup__input_type_name" id="name-input" placeholder="Имя" minlength="2"
+        <input type="text" name="name" class="popup__input popup__input_type_name" id="name-input" placeholder="Имя" minlength="2"
                maxlength="40" required>
         <span id="name-input-error" class="input-error"></span>
-        <input type="text" name="title" class="form__input popup__input popup__input_type_title" id="title-input" placeholder="О себе" minlength="2"
+        <input type="text" name="title" class="popup__input popup__input_type_title" id="title-input" placeholder="О себе" minlength="2"
                maxlength="200" required>
         <span id="title-input-error" class="input-error"></span>
         <button type="submit" aria-label="Save" class="popup__save-button">Сохранить</button>
@@ -57,11 +57,11 @@
       <button type="button" aria-label="Close" class="popup__close-button popup__close-button_card"></button>
       <h2 class="popup__title">Новое место</h2>
       <form name="cardData" class="popup__form popup__card-form" novalidate>
-        <input type="text" name="card-title" class="form__input popup__input popup__input_type_card-title" id="card-title-input" placeholder="Название"
+        <input type="text" name="card-title" class="popup__input popup__input_type_card-title" id="card-title-input" placeholder="Название"
                minlength="2" maxlength="30"
                required>
         <span id="card-title-input-error" class="input-error"></span>
-        <input type="url" name="card-link" class="form__input popup__input popup__input_type_card-link" id="card-link-input"
+        <input type="url" name="card-link" class="popup__input popup__input_type_card-link" id="card-link-input"
                placeholder="Ссылка на картинку" required>
         <span id="card-link-input-error" class="input-error"></span>
         <button type="submit" aria-label="Save" class="popup__save-button">Создать</button>
@@ -74,7 +74,7 @@
     <div class="popup__content-zoomed">
       <button type="button" aria-label="Close" class="popup__close-button popup__close-button_image"></button>
       <form name="imageData" class=" popup__image-form">
-        <img src="#" alt="" class="zoomed-photo">
+        <img src="#" alt="#" class="zoomed-photo">
         <div class="caption"></div>
       </form>
     </div>
@@ -84,7 +84,7 @@
 <template id="cards-template" class="cards">
   <div class="cards__group">
     <div class="cards__image-container">
-      <img src="#" alt="" class="cards__photo">
+      <img src="#" alt="#" class="cards__photo">
       <button type="button" aria-label="Remove" class="cards__remove-button"></button>
     </div>
     <div class="cards__description-area">
