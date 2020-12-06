@@ -1,4 +1,5 @@
 import {Card} from "./Card.js";
+import {FormValidator} from "./FormValidator.js";
 
 const editButton = document.querySelector('.profile__edit-button');
 const addCardButton = document.querySelector('.profile__add-button');
@@ -46,6 +47,13 @@ const zoomedImageCaption = document.querySelector('.caption');
 const imagePopupCloseButton = document.querySelector('.popup__close-button_image');
 const popupCardTitle = document.querySelector('.popup__input_type_card-title');
 const popupCardLink = document.querySelector('.popup__input_type_card-link');
+const validationConfig = {
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save-button',
+  inputInvalidClass: 'popup__form_type_error',
+  inputErrorClass: '.input-error',
+  buttonInvalidClass: 'popup__save-button_state_disabled',
+};
 
 function addCards(data) {
   data.forEach((item) => {
@@ -56,6 +64,12 @@ function addCards(data) {
 }
 
 addCards(initialCards);
+
+const profilePopupFormValidation = new FormValidator(validationConfig, profilePopupForm);
+profilePopupFormValidation.enableValidation();
+
+const cardPopupFormValidation = new FormValidator(validationConfig, cardPopupForm);
+cardPopupFormValidation.enableValidation();
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -77,7 +91,7 @@ function closePopupWithEsc(event) {
 function openProfilePopup() {
   popupNameField.value = profileName.textContent;
   popupTitleField.value = profileTitle.textContent;
-  resetValidation(profilePopupForm, validationConfig);
+  profilePopupFormValidation.resetValidation();
   openPopup(profilePopup);
 }
 
@@ -94,7 +108,7 @@ submitProfilePopup(profilePopup);
 profilePopupCloseButton.addEventListener('click', () => closePopup(profilePopup));
 
 function openCardPopup() {
-  resetValidation(cardPopupForm, validationConfig);
+  cardPopupFormValidation.resetValidation();
   openPopup(cardPopup);
   cardPopupForm.reset();
 }
@@ -107,7 +121,7 @@ function submitAddCardForm() {
     link: popupCardLink.value
   }]
   addCards(cardData);
-  disableSubmitButton(cardPopupForm, validationConfig);
+  cardPopupFormValidation.disableSubmitButton();
   closePopup(cardPopup);
 }
 
