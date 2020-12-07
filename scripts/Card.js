@@ -13,12 +13,13 @@ export class Card {
 
   generateCard() {
     this._element = this._getTemplate();
+    const cardsPhoto = this._element.querySelector('.cards__photo');
     this._setEventListenersForLikeButton();
     this._setEventListenersForRemoveButton();
     this._setEventListenersForImagePopup();
 
-    this._element.querySelector('.cards__photo').src = this._link;
-    this._element.querySelector('.cards__photo').alt = this._name;
+    cardsPhoto.src = this._link;
+    cardsPhoto.alt = this._name;
     this._element.querySelector('.cards__description').textContent = this._name;
     return this._element;
   }
@@ -40,7 +41,8 @@ export class Card {
   }
 
   _handleRemoveButton() {
-    this._element.querySelector('.cards__remove-button').closest('.cards__group').remove();
+    this._element.remove();
+    this._element = null;
   }
 
   _setEventListenersForImagePopup() {
