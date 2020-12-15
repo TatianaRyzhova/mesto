@@ -1,4 +1,5 @@
 import {Card} from "./Card.js";
+import {Section} from "./Section.js";
 import {FormValidator} from "./FormValidator.js";
 import {initialCards} from "./data.js";
 
@@ -10,7 +11,7 @@ const profilePopupCloseButton = document.querySelector('.popup__close-button_pro
 const popupForm = document.querySelector('.popup__form');
 const popupNameField = document.querySelector('.popup__input_type_name');
 const popupTitleField = document.querySelector('.popup__input_type_title');
-const cardsContainer = document.querySelector('.cards');
+const cardsContainer = '.cards';
 const profilePopup = document.querySelector('.popup_type_edit');
 const cardPopup = document.querySelector('.popup_type_add-card');
 const imagePopup = document.querySelector('.popup_type_image');
@@ -31,11 +32,15 @@ const validationConfig = {
 };
 
 function addCards(data) {
-  data.forEach((item) => {
-    const card = new Card(item, '#cards-template', openImagePopup);
-    const cardElement = card.generateCard();
-    cardsContainer.prepend(cardElement);
-  })
+  const defaultCardList = new Section({
+    items: data,
+    renderer: (item) => {
+      const card = new Card(item, '#cards-template', openImagePopup);
+      const cardElement = card.generateCard();
+      defaultCardList.addItem(cardElement);
+    }
+  }, cardsContainer);
+  defaultCardList.renderer();
 }
 
 addCards(initialCards);
