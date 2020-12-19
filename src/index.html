@@ -3,20 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="./pages/index.css"/>
   <title>Mesto Russia</title>
 </head>
 
 <body>
 <div class="page">
   <header class="header">
-    <img src="./images/header-logo.svg" alt="Mesto Russia лого" class="header__logo">
+    <img src="<%=require('./images/header-logo.svg')%>" alt="Mesto Russia лого" class="header__logo">
   </header>
 
   <main class="content">
 
     <section class="profile">
-      <img src="./images/photo-avatar.jpg" alt="Изображение Жак-Ив Кусто" class="profile__picture">
+      <img src="<%=require('./images/photo-avatar.jpg')%>" alt="Изображение Жак-Ив Кусто" class="profile__picture">
       <div class="profile__info">
         <div class="profile__name-kit">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -94,6 +93,5 @@
   </div>
 </template>
 
-<script type="module" src="pages/index.js"></script>
 </body>
 </html>
