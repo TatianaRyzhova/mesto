@@ -32,25 +32,22 @@ import {
 const popupWithImage = new PopupWithImage(imagePopup);
 const userInfo = new UserInfo(profileName, profileTitle);
 
-function addCards(data) {
-  const defaultCardList = new Section({
-    items: data,
-    renderer: (item) => {
-      const card = new Card({
-          data: item,
-          handleCardClick: () => {
-            popupWithImage.openPopup(item.link, item.name)
-          }
-        },
-        '#cards-template');
-      const cardElement = card.generateCard();
-      defaultCardList.addItem(cardElement);
-    }
-  }, cardsContainer);
-  defaultCardList.renderer();
-}
+const defaultCardList = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const card = new Card({
+        data: item,
+        handleCardClick: () => {
+          popupWithImage.openPopup(item.link, item.name)
+        }
+      },
+      '#cards-template');
+    const cardElement = card.generateCard();
+    defaultCardList.addItem(cardElement);
+  }
+}, cardsContainer);
+defaultCardList.renderer();
 
-addCards(initialCards);
 
 const profilePopupWithForm = new PopupWithForm({
   popupSelector: profilePopup,
@@ -88,25 +85,24 @@ const cardPopupWithForm = new PopupWithForm({
 })
 cardPopupWithForm.setEventListeners();
 
-const profilePopupClass = new Popup(profilePopup);
 editButton.addEventListener('click', () => {
   profilePopupFormValidation.resetValidation();
   profilePopupWithForm.openPopup(userInfo.getUserInfo());
 });
 
-profilePopupCloseButton.addEventListener('click', () => profilePopupClass.closePopup());
-profilePopupClass.setEventListeners();
+profilePopupCloseButton.addEventListener('click', () => profilePopupWithForm.closePopup());
+profilePopupWithForm.setEventListeners();
 
-const cardPopupClass = new Popup(cardPopup);
+// const cardPopupClass = new Popup(cardPopup);
 addCardButton.addEventListener('click', () => {
   cardPopupFormValidation.resetValidation();
   cardPopupFormValidation.disableSubmitButton();
-  cardPopupClass.openPopup();
+  cardPopupWithForm.openPopup();
   cardPopupForm.reset();
 });
 
-cardPopupCloseButton.addEventListener('click', () => cardPopupClass.closePopup());
-cardPopupClass.setEventListeners();
+cardPopupCloseButton.addEventListener('click', () => cardPopupWithForm.closePopup());
+// cardPopupClass.setEventListeners();
 
 const imagePopupClass = new Popup(imagePopup);
 imagePopupCloseButton.addEventListener('click', () => imagePopupClass.closePopup());
