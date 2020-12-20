@@ -28,7 +28,6 @@ import {
   validationConfig
 } from "../utils/constants.js";
 
-
 const popupWithImage = new PopupWithImage(imagePopup);
 const userInfo = new UserInfo(profileName, profileTitle);
 
@@ -48,7 +47,6 @@ const defaultCardList = new Section({
 }, cardsContainer);
 defaultCardList.renderer();
 
-
 const profilePopupWithForm = new PopupWithForm({
   popupSelector: profilePopup,
   handleFormSubmit: () => {
@@ -60,27 +58,33 @@ const profilePopupWithForm = new PopupWithForm({
 })
 profilePopupWithForm.setEventListeners();
 
+function createCard(item) {
+  const newCard = new Card({
+      data: item,
+      handleCardClick: () => {
+        popupWithImage.openPopup(item.link, item.name)
+      }
+    },
+    '#cards-template');
+  return newCard.generateCard();
+}
+
+const newCardSection = new Section({
+  items: [{
+    name: popupCardTitle.value,
+    link: popupCardLink.value
+  }],
+  renderer: (item) => {
+    const cardElement = createCard(item);
+    newCardSection.addItem(cardElement);
+  }
+}, cardsContainer)
+
 const cardPopupWithForm = new PopupWithForm({
   popupSelector: cardPopup,
-  handleFormSubmit: () => {
-    const newCardSection = new Section({
-      items: [{
-        name: popupCardTitle.value,
-        link: popupCardLink.value
-      }],
-      renderer: (item) => {
-        const newCard = new Card({
-            data: item,
-            handleCardClick: () => {
-              popupWithImage.openPopup(item.link, item.name)
-            }
-          },
-          '#cards-template');
-        const cardElement = newCard.generateCard();
-        newCardSection.addItem(cardElement);
-      }
-    }, cardsContainer)
-    newCardSection.renderer();
+  handleFormSubmit: (data) => {
+    const cardElement = createCard(data)
+    newCardSection.addItem(cardElement);
   }
 })
 cardPopupWithForm.setEventListeners();
@@ -93,7 +97,6 @@ editButton.addEventListener('click', () => {
 profilePopupCloseButton.addEventListener('click', () => profilePopupWithForm.closePopup());
 profilePopupWithForm.setEventListeners();
 
-// const cardPopupClass = new Popup(cardPopup);
 addCardButton.addEventListener('click', () => {
   cardPopupFormValidation.resetValidation();
   cardPopupFormValidation.disableSubmitButton();
@@ -102,7 +105,6 @@ addCardButton.addEventListener('click', () => {
 });
 
 cardPopupCloseButton.addEventListener('click', () => cardPopupWithForm.closePopup());
-// cardPopupClass.setEventListeners();
 
 const imagePopupClass = new Popup(imagePopup);
 imagePopupCloseButton.addEventListener('click', () => imagePopupClass.closePopup());
