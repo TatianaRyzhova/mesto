@@ -28,29 +28,24 @@ import {
   validationConfig
 } from "../utils/constants.js";
 
-
 const popupWithImage = new PopupWithImage(imagePopup);
 const userInfo = new UserInfo(profileName, profileTitle);
 
-function addCards(data) {
-  const defaultCardList = new Section({
-    items: data,
-    renderer: (item) => {
-      const card = new Card({
-          data: item,
-          handleCardClick: () => {
-            popupWithImage.openPopup(item.link, item.name)
-          }
-        },
-        '#cards-template');
-      const cardElement = card.generateCard();
-      defaultCardList.addItem(cardElement);
-    }
-  }, cardsContainer);
-  defaultCardList.renderer();
-}
-
-addCards(initialCards);
+const defaultCardList = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const card = new Card({
+        data: item,
+        handleCardClick: () => {
+          popupWithImage.openPopup(item.link, item.name)
+        }
+      },
+      '#cards-template');
+    const cardElement = card.generateCard();
+    defaultCardList.addItem(cardElement);
+  }
+}, cardsContainer);
+defaultCardList.renderer();
 
 const profilePopupWithForm = new PopupWithForm({
   popupSelector: profilePopup,
@@ -63,50 +58,53 @@ const profilePopupWithForm = new PopupWithForm({
 })
 profilePopupWithForm.setEventListeners();
 
+function createCard(item) {
+  const newCard = new Card({
+      data: item,
+      handleCardClick: () => {
+        popupWithImage.openPopup(item.link, item.name)
+      }
+    },
+    '#cards-template');
+  return newCard.generateCard();
+}
+
+const newCardSection = new Section({
+  items: [{
+    name: popupCardTitle.value,
+    link: popupCardLink.value
+  }],
+  renderer: (item) => {
+    const cardElement = createCard(item);
+    newCardSection.addItem(cardElement);
+  }
+}, cardsContainer)
+
 const cardPopupWithForm = new PopupWithForm({
   popupSelector: cardPopup,
-  handleFormSubmit: () => {
-    const newCardSection = new Section({
-      items: [{
-        name: popupCardTitle.value,
-        link: popupCardLink.value
-      }],
-      renderer: (item) => {
-        const newCard = new Card({
-            data: item,
-            handleCardClick: () => {
-              popupWithImage.openPopup(item.link, item.name)
-            }
-          },
-          '#cards-template');
-        const cardElement = newCard.generateCard();
-        newCardSection.addItem(cardElement);
-      }
-    }, cardsContainer)
-    newCardSection.renderer();
+  handleFormSubmit: (data) => {
+    const cardElement = createCard(data)
+    newCardSection.addItem(cardElement);
   }
 })
 cardPopupWithForm.setEventListeners();
 
-const profilePopupClass = new Popup(profilePopup);
 editButton.addEventListener('click', () => {
   profilePopupFormValidation.resetValidation();
   profilePopupWithForm.openPopup(userInfo.getUserInfo());
 });
 
-profilePopupCloseButton.addEventListener('click', () => profilePopupClass.closePopup());
-profilePopupClass.setEventListeners();
+profilePopupCloseButton.addEventListener('click', () => profilePopupWithForm.closePopup());
+profilePopupWithForm.setEventListeners();
 
-const cardPopupClass = new Popup(cardPopup);
 addCardButton.addEventListener('click', () => {
   cardPopupFormValidation.resetValidation();
   cardPopupFormValidation.disableSubmitButton();
-  cardPopupClass.openPopup();
+  cardPopupWithForm.openPopup();
   cardPopupForm.reset();
 });
 
-cardPopupCloseButton.addEventListener('click', () => cardPopupClass.closePopup());
-cardPopupClass.setEventListeners();
+cardPopupCloseButton.addEventListener('click', () => cardPopupWithForm.closePopup());
 
 const imagePopupClass = new Popup(imagePopup);
 imagePopupCloseButton.addEventListener('click', () => imagePopupClass.closePopup());
