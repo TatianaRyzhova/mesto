@@ -2,6 +2,8 @@ export class FormValidator {
   constructor(config, form) {
     this._config = config;
     this._form = form;
+    this._inputsList = this._form.querySelectorAll(this._config.inputSelector);
+    this._submitButton = this._form.querySelector(this._config.submitButtonSelector);
   }
 
   _showInputError(input) {
@@ -30,13 +32,11 @@ export class FormValidator {
       button.disabled = false;
     } else {
       button.classList.add(this._config.buttonInvalidClass);
-      button.disabled = true;
     }
   }
 
   _setEventListeners(submitButton) {
-    const inputsList = this._form.querySelectorAll(this._config.inputSelector);
-    inputsList.forEach((input) => {
+    this._inputsList.forEach((input) => {
       input.addEventListener('input', () => {
         this._checkInputValidity(input);
         this._setButtonState(submitButton, this._form.checkValidity());
@@ -45,18 +45,16 @@ export class FormValidator {
   }
 
   enableValidation() {
-    const submitButton = this._form.querySelector(this._config.submitButtonSelector);
-    this._setEventListeners(submitButton);
+    this._setEventListeners(this._submitButton);
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
     });
-    this._setButtonState(submitButton, this._form.checkValidity())
+    this._setButtonState(this._submitButton, this._form.checkValidity())
   }
 
   resetValidation() {
-    const inputs = this._form.querySelectorAll(this._config.inputSelector);
-    inputs.forEach(input => {
-      input.classList.remove(this._config.inputInvalidClass);
+    this._inputsList.forEach(input => {
+      this._hideInputError(input);
     })
     const errors = this._form.querySelectorAll(this._config.inputErrorClass);
     errors.forEach(error => {
@@ -65,8 +63,7 @@ export class FormValidator {
   }
 
   disableSubmitButton() {
-    const submitButton = this._form.querySelector(this._config.submitButtonSelector);
-    submitButton.classList.add(this._config.buttonInvalidClass);
-    submitButton.disabled = true;
+    this._submitButton.classList.add(this._config.buttonInvalidClass);
+    this._submitButton.disabled = true;
   }
 }
