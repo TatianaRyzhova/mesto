@@ -32,6 +32,7 @@ export class FormValidator {
       button.disabled = false;
     } else {
       button.classList.add(this._config.buttonInvalidClass);
+      this.disableSubmitButton();
     }
   }
 
