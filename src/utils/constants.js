@@ -1,5 +1,6 @@
 export const editButton = document.querySelector('.profile__edit-button');
 export const addCardButton = document.querySelector('.profile__add-button');
+export const profilePicture = document.querySelector('.profile__picture');
 export const profileName = document.querySelector('.profile__name');
 export const profileTitle = document.querySelector('.profile__title');
 export const profilePopupCloseButton = document.querySelector('.popup__close-button_profile');
@@ -9,6 +10,7 @@ export const cardsContainer = '.cards';
 export const profilePopup = document.querySelector('.popup_type_edit');
 export const cardPopup = document.querySelector('.popup_type_add-card');
 export const imagePopup = document.querySelector('.popup_type_image');
+export const avatarPopup = document.querySelector('.popup_type_update-avatar');
 export const cardPopupCloseButton = document.querySelector('.popup__close-button_card');
 export const cardPopupForm = document.querySelector('.popup__card-form');
 export const profilePopupForm = document.querySelector('.popup__profile-form');
@@ -22,3 +24,6 @@ export const validationConfig = {
   inputErrorClass: '.input-error',
   buttonInvalidClass: 'popup__save-button_state_disabled',
 };
+
+export const TOKEN = '62754a6c-b4dd-499b-bbf2-c3cad68b20ab';
+export const BASE_URL = 'https://mesto.nomoreparties.co/v1/cohort-19';

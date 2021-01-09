@@ -15,13 +15,16 @@
   <main class="content">
 
     <section class="profile">
-      <img src="<%=require('./images/photo-avatar.jpg')%>" alt="Изображение Жак-Ив Кусто" class="profile__picture">
+      <div class="profile__picture-kit">
+        <img src="#" alt="#" class="profile__picture">
+        <div class="profile__overlay"></div>
+      </div>
       <div class="profile__info">
         <div class="profile__name-kit">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <h1 class="profile__name"></h1>
           <button type="button" aria-label="Edit" class="profile__edit-button"></button>
         </div>
-        <p class="profile__title">Исследователь океана</p>
+        <p class="profile__title"></p>
       </div>
       <button type="button" aria-label="Add" class="profile__add-button"></button>
     </section>
@@ -78,6 +81,28 @@
       </form>
     </div>
   </div>
+
+  <div class="popup popup_type_update-avatar">
+    <div class="popup__content">
+      <button type="button" aria-label="Close" class="popup__close-button popup__close-button_card"></button>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form name="avatarData" class="popup__form popup__avatar-form" novalidate>
+        <input type="url" name="link" class="popup__input popup__input_type_avatar-link" id="avatar-link-input"
+               placeholder="Ссылка на картинку" required>
+        <span id="avatar-link-input-error" class="input-error"></span>
+        <button type="submit" aria-label="Save" class="popup__save-button">Создать</button>
+      </form>
+    </div>
+  </div>
+
+
+<!--  <div class="popup popup_type_remove-card">-->
+<!--    <div class="popup__content">-->
+<!--      <button type="button" aria-label="Close" class="popup__close-button popup__close-button_card"></button>-->
+<!--      <h2 class="popup__title">Вы уверены?</h2>-->
+<!--      <button type="submit" aria-label="Remove" class="popup__save-button">Да</button>-->
+<!--    </div>-->
+<!--  </div>-->
 </div>
 
 <template id="cards-template" class="cards">
