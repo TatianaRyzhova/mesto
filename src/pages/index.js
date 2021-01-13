@@ -2,10 +2,10 @@ import './index.css';
 import {Card} from "../components/Card.js";
 import {Section} from "../components/Section.js";
 import {FormValidator} from "../components/FormValidator.js";
-import {initialCards} from "../utils/data.js";
 import {PopupWithImage} from "../components/PopupWithImage.js";
 import {PopupWithForm} from "../components/PopupWithForm.js";
 import {UserInfo} from "../components/UserInfo.js";
+import {api} from "../components/Api.js";
 import {
   addCardButton,
   cardPopup,
@@ -20,6 +20,7 @@ import {
   popupNameField,
   popupTitleField,
   profileName,
+  profilePicture,
   profilePopup,
   profilePopupCloseButton,
   profilePopupForm,
@@ -28,23 +29,50 @@ import {
 } from "../utils/constants.js";
 
 const popupWithImage = new PopupWithImage(imagePopup);
-const userInfo = new UserInfo(profileName, profileTitle);
+const userInfo = new UserInfo(profileName, profileTitle, profilePicture);
 
-const defaultCardList = new Section({
-  items: initialCards,
-  renderer: (item) => {
-    const card = new Card({
-        data: item,
-        handleCardClick: () => {
-          popupWithImage.openPopup(item.link, item.name)
-        }
-      },
-      '#cards-template');
-    const cardElement = card.generateCard();
-    defaultCardList.addItem(cardElement);
-  }
-}, cardsContainer);
-defaultCardList.renderer();
+const section = new Section({
+    renderer: (item) => {
+      const card = createCard(item);
+      section.addItem(card);
+    }
+  },
+  cardsContainer)
+
+Promise.all([
+  api.getUserInfo(),
+  api.getInitialCards()
+])
+  .then((result) => {
+    userInfo.setUserInfo(result[0]);
+    section.renderer(result[1]);
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+
+
+// api.getInitialCards()
+//   .then((initialCards) => {
+//     const defaultCardList = new Section({
+//       items: initialCards,
+//       renderer: (item) => {
+//         const card = new Card({
+//             data: item,
+//             handleCardClick: () => {
+//               popupWithImage.openPopup(item.link, item.name)
+//             }
+//           },
+//           '#cards-template');
+//         const cardElement = card.generateCard();
+//         defaultCardList.addItem(cardElement);
+//       }
+//     }, cardsContainer);
+//     defaultCardList.renderer();
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
 
 const profilePopupWithForm = new PopupWithForm({
   popupSelector: profilePopup,
@@ -58,14 +86,15 @@ const profilePopupWithForm = new PopupWithForm({
 profilePopupWithForm.setEventListeners();
 
 function createCard(item) {
-  const newCard = new Card({
+  const card = new Card({
       data: item,
       handleCardClick: () => {
         popupWithImage.openPopup(item.link, item.name)
       }
     },
     '#cards-template');
-  return newCard.generateCard();
+  return card.generateCard();
+
 }
 
 const newCardSection = new Section({
