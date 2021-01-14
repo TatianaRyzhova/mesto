@@ -77,10 +77,22 @@ Promise.all([
 const profilePopupWithForm = new PopupWithForm({
   popupSelector: profilePopup,
   handleFormSubmit: () => {
-    userInfo.setUserInfo({
-      profileName: popupNameField.value,
-      profileTitle: popupTitleField.value
-    })
+    profilePopupWithForm.renderLoading(true);
+    // userInfo.setUserInfo({
+    //   profileName: popupNameField.value,
+    //   profileTitle: popupTitleField.value
+    // })
+    api.updateUserProfile(popupNameField.value, popupTitleField.value)
+      .then((result) => {
+        console.log("TEST " + result);
+        userInfo.setUserInfo(result)
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        profilePopupWithForm.renderLoading(false);
+      })
   }
 })
 profilePopupWithForm.setEventListeners();
