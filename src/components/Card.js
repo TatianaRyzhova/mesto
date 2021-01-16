@@ -1,18 +1,4 @@
 export class Card {
-
-  // constructor(currentUserId, {data, handleCardClick, handleLikeClick, handleDeleteClick}, cardTemplate) {
-  //   this._name = data.name;
-  //   this._link = data.link;
-  //   this._cardTemplate = cardTemplate;
-  //   this._handleCardClick = handleCardClick;
-  //   this._handleLikeClick = handleLikeClick;
-  //   this._handleDeleteClick = handleDeleteClick;
-  //   this._id = data._id;
-  //   this._owner = data.owner;
-  //   this._likes = data.likes;
-  //   this.currentUserId = currentUserId;
-  // }
-
   constructor({data, handleCardClick, handleLikeClick, handleDeleteClick}, cardTemplate, currentUserId) {
     this._name = data.name;
     this._link = data.link;
@@ -28,22 +14,6 @@ export class Card {
 
   _getTemplate() {
     return document.querySelector(this._cardTemplate).content.querySelector('.cards__group').cloneNode(true);
-  }
-
-  generateCard() {
-    this._element = this._getTemplate();
-    const cardsPhoto = this._element.querySelector('.cards__photo');
-    this._setEventListenersForLikeButton();
-    this._setEventListenersForRemoveButton();
-    this._setEventListenersForImagePopup();
-    this._displayCurrentLikesQty();
-    this.setLikes(this._likes);
-    this._displayCardRemoveButton();
-
-    cardsPhoto.src = this._link;
-    cardsPhoto.alt = this._name;
-    this._element.querySelector('.cards__description').textContent = this._name;
-    return this._element;
   }
 
   _setEventListenersForLikeButton() {
@@ -98,14 +68,29 @@ export class Card {
     })
   }
 
+  _setEventListenersForImagePopup() {
+    this._element.querySelector('.cards__photo').addEventListener('click', () =>
+      this._handleCardClick(this._link, this._name));
+  }
+
   deleteCard() {
     this._element.remove();
     this._element = null;
   }
 
-  _setEventListenersForImagePopup() {
-    this._element.querySelector('.cards__photo').addEventListener('click', () =>
-      this._handleCardClick(this._link, this._name));
+  generateCard() {
+    this._element = this._getTemplate();
+    const cardsPhoto = this._element.querySelector('.cards__photo');
+    this._setEventListenersForLikeButton();
+    this._setEventListenersForRemoveButton();
+    this._setEventListenersForImagePopup();
+    this._displayCurrentLikesQty();
+    this.setLikes(this._likes);
+    this._displayCardRemoveButton();
+    cardsPhoto.src = this._link;
+    cardsPhoto.alt = this._name;
+    this._element.querySelector('.cards__description').textContent = this._name;
+    return this._element;
   }
 
 }
