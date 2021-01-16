@@ -39,6 +39,8 @@ const section = new Section({
   },
   cardsContainer)
 
+let currentUserId;
+
 Promise.all([
   api.getUserInfo(),
   api.getInitialCards()
@@ -46,6 +48,9 @@ Promise.all([
   .then((result) => {
     userInfo.setUserInfo(result[0]);
     section.renderer(result[1]);
+
+    currentUserId = result[0]._id
+    console.log("Current user id: " + currentUserId);
   })
   .catch((error) => {
     console.log(error);
@@ -84,7 +89,6 @@ const profilePopupWithForm = new PopupWithForm({
     // })
     api.updateUserProfile(popupNameField.value, popupTitleField.value)
       .then((result) => {
-        console.log("TEST " + result);
         userInfo.setUserInfo(result)
       })
       .catch((error) => {
@@ -102,29 +106,55 @@ function createCard(item) {
       data: item,
       handleCardClick: () => {
         popupWithImage.openPopup(item.link, item.name)
+      },
+      handleLikeClick: (cardId, isLiked) => {
+        if (isLiked) {
+          api.deleteCardLike(cardId)
+            .then((result) => {
+              card.setLikes(result.likes);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+        } else {
+          api.addCardLike(cardId)
+            .then((result) => {
+              card.setLikes(result.likes)
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+        }
       }
     },
-    '#cards-template');
+    '#cards-template',
+    '4d12faba6892ec6f056527cb');
+  // console.log("TEST2 " + currentUserId);
   return card.generateCard();
-
 }
 
-const newCardSection = new Section({
-  items: [{
-    name: popupCardTitle.value,
-    link: popupCardLink.value
-  }],
-  renderer: (item) => {
-    const cardElement = createCard(item);
-    newCardSection.addItem(cardElement);
-  }
-}, cardsContainer)
+// const newCardSection = new Section({
+//   items: [{
+//     name: popupCardTitle.value,
+//     link: popupCardLink.value
+//   }],
+//   renderer: (item) => {
+//     const cardElement = createCard(item);
+//     newCardSection.addItem(cardElement);
+//   }
+// }, cardsContainer)
 
 const cardPopupWithForm = new PopupWithForm({
   popupSelector: cardPopup,
-  handleFormSubmit: (data) => {
-    const cardElement = createCard(data)
-    newCardSection.addItem(cardElement);
+  handleFormSubmit: () => {
+    api.postNewCard(popupCardTitle.value, popupCardLink.value)
+      .then(result => {
+        const cardElement = createCard(result);
+        section.addItem(cardElement);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
 })
 cardPopupWithForm.setEventListeners();
