@@ -64,7 +64,7 @@ class Api {
       })
   }
 
-  deleteCardLike(id) {
+  deleteLike(id) {
     return fetch(`${this._baseUrl}/cards/likes/${id}`, {
       method: 'DELETE',
       headers: this._headers

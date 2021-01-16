@@ -98,11 +98,6 @@ export class Card {
     })
   }
 
-  // _handleRemoveButton() {
-  //   this._element.remove();
-  //   this._element = null;
-  // }
-
   deleteCard() {
     this._element.remove();
     this._element = null;

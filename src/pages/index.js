@@ -12,6 +12,8 @@ import {
   cardPopupCloseButton,
   cardPopupForm,
   cardsContainer,
+  confirmationPopup,
+  confirmationPopupCloseButton,
   editButton,
   imagePopup,
   imagePopupCloseButton,
@@ -27,9 +29,11 @@ import {
   profileTitle,
   validationConfig
 } from "../utils/constants.js";
+import {PopupConfirm} from "../components/PopupConfirm.js";
 
 const popupWithImage = new PopupWithImage(imagePopup);
 const userInfo = new UserInfo(profileName, profileTitle, profilePicture);
+const popupConfirmation = new PopupConfirm(confirmationPopup);
 
 const section = new Section({
     renderer: (item) => {
@@ -55,7 +59,6 @@ Promise.all([
   .catch((error) => {
     console.log(error);
   })
-
 
 // api.getInitialCards()
 //   .then((initialCards) => {
@@ -109,7 +112,7 @@ function createCard(item) {
       },
       handleLikeClick: (cardId, isLiked) => {
         if (isLiked) {
-          api.deleteCardLike(cardId)
+          api.deleteLike(cardId)
             .then((result) => {
               card.setLikes(result.likes);
             })
@@ -125,6 +128,19 @@ function createCard(item) {
               console.log(error);
             })
         }
+      },
+      handleDeleteClick: (cardId) => {
+        popupConfirmation.setSubmitAction(() => {
+          api.deleteCard(cardId)
+            .then(() => {
+              card.deleteCard();
+              popupConfirmation.closePopup();
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+        popupConfirmation.openPopup();
       }
     },
     '#cards-template',
@@ -178,6 +194,9 @@ cardPopupCloseButton.addEventListener('click', () => cardPopupWithForm.closePopu
 
 imagePopupCloseButton.addEventListener('click', () => popupWithImage.closePopup());
 popupWithImage.setEventListeners();
+
+confirmationPopupCloseButton.addEventListener('click', () => popupConfirmation.closePopup());
+popupConfirmation.setEventListeners();
 
 const profilePopupFormValidation = new FormValidator(validationConfig, profilePopupForm);
 profilePopupFormValidation.enableValidation();
