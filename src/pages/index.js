@@ -31,6 +31,8 @@ import {
 } from "../utils/constants.js";
 import {PopupConfirm} from "../components/PopupConfirm.js";
 
+let currentUserId;
+
 const popupWithImage = new PopupWithImage(imagePopup);
 const userInfo = new UserInfo(profileName, profileTitle, profilePicture);
 const popupConfirmation = new PopupConfirm(confirmationPopup);
@@ -42,8 +44,6 @@ const section = new Section({
     }
   },
   cardsContainer)
-
-let currentUserId;
 
 Promise.all([
   api.getUserInfo(),
@@ -163,6 +163,7 @@ function createCard(item) {
 const cardPopupWithForm = new PopupWithForm({
   popupSelector: cardPopup,
   handleFormSubmit: () => {
+    cardPopupWithForm.renderLoading(true);
     api.postNewCard(popupCardTitle.value, popupCardLink.value)
       .then(result => {
         const cardElement = createCard(result);
@@ -170,6 +171,9 @@ const cardPopupWithForm = new PopupWithForm({
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        cardPopupWithForm.renderLoading(false);
       })
   }
 })
