@@ -6,6 +6,13 @@ class Api {
     this._headers = headers;
   }
 
+  _checkRequestStatus(result) {
+    if (result.ok) {
+      return result.json();
+    }
+    return Promise.reject(`Что-то пошло не так: ${result.status}`);
+  }
+
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
@@ -84,13 +91,18 @@ class Api {
       })
   }
 
-  _checkRequestStatus(result) {
-    if (result.ok) {
-      return result.json();
-    }
-    return Promise.reject(`Что-то пошло не так: ${result.status}`);
+  updateAvatar(link) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: link
+      })
+    })
+      .then(result => {
+        return this._checkRequestStatus(result);
+      })
   }
-
 }
 
 export const api = new Api({

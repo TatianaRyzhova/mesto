@@ -8,6 +8,9 @@ import {UserInfo} from "../components/UserInfo.js";
 import {api} from "../components/Api.js";
 import {
   addCardButton,
+  avatarPopup,
+  avatarPopupCloseButton,
+  avatarPopupForm,
   cardPopup,
   cardPopupCloseButton,
   cardPopupForm,
@@ -17,12 +20,14 @@ import {
   editButton,
   imagePopup,
   imagePopupCloseButton,
+  popupAvatarLink,
   popupCardLink,
   popupCardTitle,
   popupNameField,
   popupTitleField,
   profileName,
   profilePicture,
+  profilePictureKit,
   profilePopup,
   profilePopupCloseButton,
   profilePopupForm,
@@ -60,36 +65,10 @@ Promise.all([
     console.log(error);
   })
 
-// api.getInitialCards()
-//   .then((initialCards) => {
-//     const defaultCardList = new Section({
-//       items: initialCards,
-//       renderer: (item) => {
-//         const card = new Card({
-//             data: item,
-//             handleCardClick: () => {
-//               popupWithImage.openPopup(item.link, item.name)
-//             }
-//           },
-//           '#cards-template');
-//         const cardElement = card.generateCard();
-//         defaultCardList.addItem(cardElement);
-//       }
-//     }, cardsContainer);
-//     defaultCardList.renderer();
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
-
 const profilePopupWithForm = new PopupWithForm({
   popupSelector: profilePopup,
   handleFormSubmit: () => {
     profilePopupWithForm.renderLoading(true);
-    // userInfo.setUserInfo({
-    //   profileName: popupNameField.value,
-    //   profileTitle: popupTitleField.value
-    // })
     api.updateUserProfile(popupNameField.value, popupTitleField.value)
       .then((result) => {
         userInfo.setUserInfo(result)
@@ -149,17 +128,6 @@ function createCard(item) {
   return card.generateCard();
 }
 
-// const newCardSection = new Section({
-//   items: [{
-//     name: popupCardTitle.value,
-//     link: popupCardLink.value
-//   }],
-//   renderer: (item) => {
-//     const cardElement = createCard(item);
-//     newCardSection.addItem(cardElement);
-//   }
-// }, cardsContainer)
-
 const cardPopupWithForm = new PopupWithForm({
   popupSelector: cardPopup,
   handleFormSubmit: () => {
@@ -178,6 +146,33 @@ const cardPopupWithForm = new PopupWithForm({
   }
 })
 cardPopupWithForm.setEventListeners();
+
+const avatarPopupWithForm = new PopupWithForm({
+  popupSelector: avatarPopup,
+  handleFormSubmit: () => {
+    avatarPopupWithForm.renderLoading(true);
+    api.updateAvatar(popupAvatarLink.value)
+      .then((result) => {
+        userInfo.setUserInfo(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        avatarPopupWithForm.renderLoading(false);
+      })
+    avatarPopupWithForm.openPopup();
+  }
+})
+
+const profilePopupFormValidation = new FormValidator(validationConfig, profilePopupForm);
+profilePopupFormValidation.enableValidation();
+
+const cardPopupFormValidation = new FormValidator(validationConfig, cardPopupForm);
+cardPopupFormValidation.enableValidation();
+
+const avatarPopupFormValidation = new FormValidator(validationConfig, avatarPopupForm);
+avatarPopupFormValidation.enableValidation();
 
 editButton.addEventListener('click', () => {
   profilePopupFormValidation.resetValidation();
@@ -202,8 +197,13 @@ popupWithImage.setEventListeners();
 confirmationPopupCloseButton.addEventListener('click', () => popupConfirmation.closePopup());
 popupConfirmation.setEventListeners();
 
-const profilePopupFormValidation = new FormValidator(validationConfig, profilePopupForm);
-profilePopupFormValidation.enableValidation();
+profilePictureKit.addEventListener('click', () => {
+  avatarPopupFormValidation.resetValidation();
+  avatarPopupFormValidation.disableSubmitButton();
+  avatarPopupWithForm.openPopup();
+  avatarPopupForm.reset();
+})
 
-const cardPopupFormValidation = new FormValidator(validationConfig, cardPopupForm);
-cardPopupFormValidation.enableValidation();
+avatarPopupCloseButton.addEventListener('click', () => avatarPopupWithForm.closePopup());
+
+avatarPopupWithForm.setEventListeners();

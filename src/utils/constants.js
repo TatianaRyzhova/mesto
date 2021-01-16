@@ -19,6 +19,10 @@ export const profilePopupForm = document.querySelector('.popup__profile-form');
 export const imagePopupCloseButton = document.querySelector('.popup__close-button_image');
 export const popupCardTitle = document.querySelector('.popup__input_type_card-title');
 export const popupCardLink = document.querySelector('.popup__input_type_card-link');
+export const popupAvatarLink = document.querySelector('.popup__input_type_avatar-link');
+export const avatarPopupForm = document.querySelector('.popup__avatar-form');
+export const profilePictureKit = document.querySelector('.profile__picture-kit');
+export const avatarPopupCloseButton = document.querySelector('.popup__close-button_avatar');
 export const validationConfig = {
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__save-button',
