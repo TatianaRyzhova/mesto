@@ -57,7 +57,7 @@ export class Card {
   }
 
   _displayCardRemoveButton() {
-    if(this._owner._id !== this._currentUserId) {
+    if (this._owner._id !== this._currentUserId) {
       this._element.querySelector('.cards__remove-button').classList.add('cards__remove-button_hidden');
     }
   }

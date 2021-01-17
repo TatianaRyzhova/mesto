@@ -32,7 +32,7 @@ export class PopupWithForm extends Popup {
   }
 
   renderLoading(isLoading) {
-    if(isLoading) {
+    if (isLoading) {
       this._popupElement.querySelector('.popup__save-button').innerText = 'Сохранение...';
     } else {
       this._popupElement.querySelector('.popup__save-button').innerText = 'Сохранить';
