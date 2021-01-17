@@ -1,7 +1,8 @@
 export class UserInfo {
-  constructor(profileNameElement, profileTitleElement) {
+  constructor(profileNameElement, profileTitleElement, profilePicture) {
     this._profileNameElement = profileNameElement;
     this._profileTitleElement = profileTitleElement;
+    this._profilePicture = profilePicture;
   }
 
   getUserInfo() {
@@ -11,8 +12,9 @@ export class UserInfo {
     }
   }
 
-  setUserInfo({profileName, profileTitle}) {
-    this._profileNameElement.textContent = profileName;
-    this._profileTitleElement.textContent = profileTitle;
+  setUserInfo({name, about, avatar}) {
+    this._profileNameElement.textContent = name;
+    this._profileTitleElement.textContent = about;
+    this._profilePicture.src = avatar;
   }
 }

@@ -30,4 +30,12 @@ export class PopupWithForm extends Popup {
     });
     return this._formValues;
   }
+
+  renderLoading(isLoading) {
+    if (isLoading) {
+      this._popupElement.querySelector('.popup__save-button').innerText = 'Сохранение...';
+    } else {
+      this._popupElement.querySelector('.popup__save-button').innerText = 'Сохранить';
+    }
+  }
 }
