@@ -55,11 +55,9 @@ Promise.all([
   api.getInitialCards()
 ])
   .then((result) => {
+    currentUserId = result[0]._id;
     userInfo.setUserInfo(result[0]);
     section.renderer(result[1]);
-
-    currentUserId = result[0]._id
-    console.log("Current user id: " + currentUserId);
   })
   .catch((error) => {
     console.log(error);
@@ -123,8 +121,7 @@ function createCard(item) {
       }
     },
     '#cards-template',
-    '4d12faba6892ec6f056527cb');
-  // console.log("TEST2 " + currentUserId);
+    currentUserId);
   return card.generateCard();
 }
 
@@ -136,6 +133,7 @@ const cardPopupWithForm = new PopupWithForm({
       .then(result => {
         const cardElement = createCard(result);
         section.addItem(cardElement);
+        cardPopupWithForm.closePopup();
       })
       .catch((error) => {
         console.log(error);
@@ -154,6 +152,7 @@ const avatarPopupWithForm = new PopupWithForm({
     api.updateAvatar(popupAvatarLink.value)
       .then((result) => {
         userInfo.setUserInfo(result);
+        avatarPopupWithForm.closePopup();
       })
       .catch((error) => {
         console.log(error);
