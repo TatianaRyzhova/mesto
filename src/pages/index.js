@@ -50,9 +50,10 @@ Promise.all([
   api.getInitialCards()
 ])
   .then((result) => {
-    currentUserId = result[0]._id;
-    userInfo.setUserInfo(result[0]);
-    section.renderer(result[1]);
+    let [user, card] = result;
+    currentUserId = user._id;
+    userInfo.setUserInfo(user);
+    section.renderer(card);
   })
   .catch((error) => {
     console.log(error);
