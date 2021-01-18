@@ -9,17 +9,13 @@ import {api} from "../components/Api.js";
 import {
   addCardButton,
   avatarPopup,
-  avatarPopupCloseButton,
   avatarPopupForm,
   cardPopup,
-  cardPopupCloseButton,
   cardPopupForm,
   cardsContainer,
   confirmationPopup,
-  confirmationPopupCloseButton,
   editButton,
   imagePopup,
-  imagePopupCloseButton,
   popupAvatarLink,
   popupCardLink,
   popupCardTitle,
@@ -29,7 +25,6 @@ import {
   profilePicture,
   profilePictureKit,
   profilePopup,
-  profilePopupCloseButton,
   profilePopupForm,
   profileTitle,
   validationConfig
@@ -55,9 +50,10 @@ Promise.all([
   api.getInitialCards()
 ])
   .then((result) => {
-    currentUserId = result[0]._id;
-    userInfo.setUserInfo(result[0]);
-    section.renderer(result[1]);
+    let [user, card] = result;
+    currentUserId = user._id;
+    userInfo.setUserInfo(user);
+    section.renderer(card);
   })
   .catch((error) => {
     console.log(error);
@@ -69,7 +65,8 @@ const profilePopupWithForm = new PopupWithForm({
     profilePopupWithForm.renderLoading(true);
     api.updateUserProfile(popupNameField.value, popupTitleField.value)
       .then((result) => {
-        userInfo.setUserInfo(result)
+        userInfo.setUserInfo(result);
+        profilePopupWithForm.closePopup();
       })
       .catch((error) => {
         console.log(error);
@@ -178,23 +175,12 @@ editButton.addEventListener('click', () => {
   profilePopupWithForm.openPopup(userInfo.getUserInfo());
 });
 
-profilePopupCloseButton.addEventListener('click', () => profilePopupWithForm.closePopup());
-profilePopupWithForm.setEventListeners();
-
 addCardButton.addEventListener('click', () => {
   cardPopupFormValidation.resetValidation();
   cardPopupFormValidation.disableSubmitButton();
   cardPopupWithForm.openPopup();
   cardPopupForm.reset();
 });
-
-cardPopupCloseButton.addEventListener('click', () => cardPopupWithForm.closePopup());
-
-imagePopupCloseButton.addEventListener('click', () => popupWithImage.closePopup());
-popupWithImage.setEventListeners();
-
-confirmationPopupCloseButton.addEventListener('click', () => popupConfirmation.closePopup());
-popupConfirmation.setEventListeners();
 
 profilePictureKit.addEventListener('click', () => {
   avatarPopupFormValidation.resetValidation();
@@ -203,6 +189,7 @@ profilePictureKit.addEventListener('click', () => {
   avatarPopupForm.reset();
 })
 
-avatarPopupCloseButton.addEventListener('click', () => avatarPopupWithForm.closePopup());
-
+profilePopupWithForm.setEventListeners();
+popupWithImage.setEventListeners();
+popupConfirmation.setEventListeners();
 avatarPopupWithForm.setEventListeners();
