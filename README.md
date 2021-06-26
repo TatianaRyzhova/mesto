@@ -19,18 +19,13 @@ Vanilla JS
 
 ## How to run:
 
-* Install npm dependencies:
+1. Install npm dependencies:
 
 ```sh
 npm install
 ```
-* Build project:
 
-```sh
-npm run build
-```
-
-* Launch project in the dev mode:
+2. Launch project in the dev mode:
 
 ```sh
 npm run dev
@@ -38,13 +33,21 @@ npm run dev
 
 The project will start at `http://localhost:8080/`
 
-* Run tests:
+### Other useful commands:
+
+1. Run tests:
 
 ```sh
 npm run test
 ```
 
-* Deploy project:
+2. Build project:
+
+```sh
+npm run build
+```
+
+3. Deploy project:
 
 ```sh
 npm run deploy
