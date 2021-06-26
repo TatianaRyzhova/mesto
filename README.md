@@ -8,7 +8,7 @@ Mesto is an interactive page.
 It is a service which allows users to interact with photos. Users can add, remove photos and put likes.
 Also, users has opportunity to edit their information: profile picture, name and description.
 
-:link: The project is implemented using Vanilla JS. The React version of the service can be found [here](https://github.com/TatianaRyzhova/react-mesto-auth)
+:link: The project is implemented using Vanilla JS. React version of the service can be found [here](https://github.com/TatianaRyzhova/react-mesto-auth)
 
 ## Tech stack:
 
