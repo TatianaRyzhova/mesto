@@ -14,9 +14,9 @@ Also, users has opportunity to edit their information: profile picture, name and
 
 <code><img src="https://user-images.githubusercontent.com/56598375/123514858-3d309f80-d695-11eb-97b4-6a7a1ad2a920.png" alt="html-5" width="18px" height="18px"></code> HTML
 
-<code><img src="https://user-images.githubusercontent.com/56598375/123514865-428dea00-d695-11eb-9808-a5bcd93bbfb5.png" alt="html-5" width="18px" height="18px"></code> CSS
+<code><img src="https://user-images.githubusercontent.com/56598375/123514865-428dea00-d695-11eb-9808-a5bcd93bbfb5.png" alt="css3" width="18px" height="18px"></code> CSS
 
-<code><img src="https://user-images.githubusercontent.com/56598375/123516727-d794e100-d69d-11eb-9c06-fc90be91e717.png" alt="html-5" width="18px" height="18px"></code> Vanilla JS
+<code><img src="https://user-images.githubusercontent.com/56598375/123516727-d794e100-d69d-11eb-9c06-fc90be91e717.png" alt="js" width="18px" height="18px"></code> Vanilla JS
 
 ## How to run:
 
